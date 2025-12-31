@@ -17,9 +17,6 @@ class WeatherService
     $this->apiKey = config('services.openweathermap.key');
   }
 
-  /**
-   * Get current weather for a city
-   */
   public function getCurrentWeather(string $city, float $lat = null, float $lon = null): ?array
   {
     $cacheKey = "weather_{$city}_" . now()->format('YmdHi');
@@ -62,9 +59,6 @@ class WeatherService
     });
   }
 
-  /**
-   * Get weather forecast (5 days)
-   */
   public function getForecast(string $city, float $lat = null, float $lon = null): ?array
   {
     try {
@@ -97,9 +91,6 @@ class WeatherService
     }
   }
 
-  /**
-   * Format weather data
-   */
   private function formatWeatherData(array $data): array
   {
     return [
@@ -121,17 +112,12 @@ class WeatherService
     ];
   }
 
-  /**
-   * Store weather data to database
-   */
   public function storeWeatherData(array $weatherData): WeatherData
   {
     return WeatherData::create($weatherData);
   }
 
-  /**
-   * Get historical rainfall (last N days)
-   */
+
   public function getHistoricalRainfall(string $city, int $days = 7): array
   {
     $from = now()->subDays($days);
@@ -148,9 +134,6 @@ class WeatherService
     ];
   }
 
-  /**
-   * Calculate rainfall trend
-   */
   private function calculateTrend($data): float
   {
     if ($data->count() < 2) {
