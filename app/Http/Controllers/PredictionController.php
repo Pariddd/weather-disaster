@@ -33,7 +33,6 @@ class PredictionController extends Controller
         $city = $validated['city'];
         $cityData = City::where('name', $city)->firstOrFail();
 
-        // Get current weather
         $weather = $this->weatherService->getCurrentWeather(
             $city,
             $cityData->latitude,
@@ -44,13 +43,10 @@ class PredictionController extends Controller
             return back()->with('error', 'Failed to fetch weather data');
         }
 
-        // Store weather data
         $weatherData = $this->weatherService->storeWeatherData($weather);
 
-        // Get historical data
         $historical = $this->weatherService->getHistoricalRainfall($city);
 
-        // Predict disaster
         $prediction = $this->predictionService->predictDisaster($weatherData, $historical);
 
         if ($prediction) {
