@@ -45,6 +45,16 @@ class DisasterPrediction extends Model
         return $query->whereIn('risk_level', ['High', 'Critical']);
     }
 
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city', 'name');
+    }
+
+    public function alerts()
+    {
+        return $this->hasMany(DisasterAlert::class);
+    }
+
     public function scopeToday($query)
     {
         return $query->whereDate('predicted_at', today());

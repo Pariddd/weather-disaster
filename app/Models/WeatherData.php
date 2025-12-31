@@ -37,6 +37,16 @@ class WeatherData extends Model
         'recorded_at' => 'datetime',
     ];
 
+    public function predictions()
+    {
+        return $this->hasMany(DisasterPrediction::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city', 'name');
+    }
+
     public function scopeLatestByCity($query)
     {
         return $query->whereIn('id', function ($subquery) {
