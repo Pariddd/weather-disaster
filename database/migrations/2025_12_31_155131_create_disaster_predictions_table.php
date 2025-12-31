@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('disaster_predictions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('weather_data_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('weather_data_id')->nullable()->constrained('weather_data')->onDelete('cascade');
             $table->string('city', 100);
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
